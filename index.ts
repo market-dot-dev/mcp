@@ -10,17 +10,41 @@ const server = new FastMCP({
 
 // Tool for searching experts
 server.addTool({
-  name: "searchExperts",
+  name: "search_experts",
   description: "Search for experts on market.dev platform",
   parameters: z.object({
     query: z.string().describe("Search term to find experts (e.g., 'developer', 'designer', 'andrew')"),
+    count: z.number().min(1).max(20).default(10).describe("Number of results (1-20, default 10)").optional(),
+    offset: z.number().min(0).max(9).default(0).describe("Pagination offset (max 9, default 0)").optional(),
+    location: z.string().describe("Filter by location (e.g., 'New York', 'Remote')").optional(),
   }),
   execute: async (args, { log }) => {
     try {
-      log.info("Searching for experts", { query: args.query });
+      log.info("Searching for experts", { 
+        query: args.query,
+        count: args.count,
+        offset: args.offset,
+        location: args.location
+      });
+      
+      const params = new URLSearchParams({
+        q: args.query,
+      });
+      
+      if (args.count !== undefined) {
+        params.append('count', args.count.toString());
+      }
+      
+      if (args.offset !== undefined) {
+        params.append('offset', args.offset.toString());
+      }
+      
+      if (args.location) {
+        params.append('location', args.location);
+      }
       
       const response = await fetch(
-        `https://explore.market.dev/api/v1/experts/search?q=${encodeURIComponent(args.query)}`
+        `https://explore.market.dev/api/v1/experts/search?${params.toString()}`
       );
       
       if (!response.ok) {
@@ -33,7 +57,7 @@ server.addTool({
         resultsCount: Array.isArray(data) ? data.length : 'unknown' 
       });
       
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(data);
     } catch (error) {
       if (error instanceof UserError) {
         throw error;
@@ -45,17 +69,35 @@ server.addTool({
 
 // Tool for searching projects
 server.addTool({
-  name: "searchProjects",
+  name: "search_projects",
   description: "Search for projects on market.dev platform",
   parameters: z.object({
     query: z.string().describe("Search term to find projects (e.g., 'blockchain', 'AI', 'ipfs')"),
+    count: z.number().min(1).max(20).default(10).describe("Number of results (1-20, default 10)").optional(),
+    offset: z.number().min(0).max(9).default(0).describe("Pagination offset (max 9, default 0)").optional(),
   }),
   execute: async (args, { log }) => {
     try {
-      log.info("Searching for projects", { query: args.query });
+      log.info("Searching for projects", { 
+        query: args.query,
+        count: args.count,
+        offset: args.offset
+      });
+      
+      const params = new URLSearchParams({
+        q: args.query,
+      });
+      
+      if (args.count !== undefined) {
+        params.append('count', args.count.toString());
+      }
+      
+      if (args.offset !== undefined) {
+        params.append('offset', args.offset.toString());
+      }
       
       const response = await fetch(
-        `https://explore.market.dev/api/v1/projects/search?q=${encodeURIComponent(args.query)}`
+        `https://explore.market.dev/api/v1/projects/search?${params.toString()}`
       );
       
       if (!response.ok) {
@@ -68,7 +110,7 @@ server.addTool({
         resultsCount: Array.isArray(data) ? data.length : 'unknown' 
       });
       
-      return JSON.stringify(data, null, 2);
+      return JSON.stringify(data);
     } catch (error) {
       if (error instanceof UserError) {
         throw error;
@@ -82,5 +124,3 @@ server.addTool({
 server.start({
   transportType: "stdio",
 });
-
-// console.log("Market.dev MCP server started");

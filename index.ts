@@ -91,7 +91,11 @@ server.addTool({
       if (error instanceof UserError) {
         throw error;
       }
-      throw new UserError(`Error searching experts: ${error.message}`);
+
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
+      throw new UserError(`Error searching experts: ${errorMessage}`);
     }
   },
 });
@@ -167,7 +171,11 @@ server.addTool({
       if (error instanceof UserError) {
         throw error;
       }
-      throw new UserError(`Error searching projects: ${error.message}`);
+
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+
+      throw new UserError(`Error searching projects: ${errorMessage}`);
     }
   },
 });

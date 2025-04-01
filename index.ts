@@ -1,6 +1,10 @@
 import { FastMCP, UserError } from "fastmcp";
 import { z } from "zod";
 
+// Get API base URL from environment variable or use default
+const API_BASE_URL =
+  process.env.MARKET_DEV_API_URL || "https://explore.market.dev";
+
 // Create a new FastMCP server instance
 const server = new FastMCP({
   name: "Market.dev MCP",
@@ -66,7 +70,7 @@ server.addTool({
       }
 
       const response = await fetch(
-        `https://explore.market.dev/api/v1/experts/search?${params.toString()}`
+        `${API_BASE_URL}/api/v1/experts/search?${params.toString()}`
       );
 
       if (!response.ok) {
@@ -142,7 +146,7 @@ server.addTool({
       }
 
       const response = await fetch(
-        `https://explore.market.dev/api/v1/projects/search?${params.toString()}`
+        `${API_BASE_URL}/api/v1/projects/search?${params.toString()}`
       );
 
       if (!response.ok) {

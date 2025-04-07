@@ -1,3 +1,4 @@
+#!/usr/bin/env tsx
 import { FastMCP, UserError } from "fastmcp";
 import { z } from "zod";
 

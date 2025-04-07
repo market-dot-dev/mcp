@@ -8,19 +8,17 @@
   "bugs": "https://github.com/modelcontextprotocol/servers/issues",
   "type": "module",
   "bin": {
-    "mcp-server-market-dot-dev": "dist/index.js"
+    "mcp-server-market-dot-dev": "index.ts"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
-    "build": "tsc && shx chmod +x dist/*.js",
+    "build": "tsc && shx chmod +x index.ts",
     "prepare": "npm run build",
     "watch": "tsc --watch"
   },
   "dependencies": {
     "fastmcp": "^1.20.5",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "tsx": "^4.19.3"
   },
   "devDependencies": {
     "@types/node": "^22",

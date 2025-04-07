@@ -42,7 +42,7 @@ Add this to your `claude_desktop_config.json`:
   "mcpServers": {
     "market-dev": {
       "command": "npx",
-      "args": ["-y", "git+https://github.com/market-dot-dev/mcp-beta.git"]
+      "args": ["-y", "git+https://github.com/market-dot-dev/mcp.git"]
     }
   }
 }

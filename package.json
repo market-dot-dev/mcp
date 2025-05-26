@@ -16,13 +16,13 @@
     "watch": "tsc --watch"
   },
   "dependencies": {
-    "fastmcp": "^1.20.5",
-    "zod": "^3.24.2",
-    "tsx": "^4.19.3"
+    "fastmcp": "^1.27.7",
+    "tsx": "^4.19.4",
+    "zod": "^3.25.28"
   },
   "devDependencies": {
-    "@types/node": "^22",
+    "@types/node": "^22.15.21",
     "shx": "^0.3.4",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   }
 }
